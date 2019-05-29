@@ -6,7 +6,7 @@ class Jets::Booter
 
       turbo.charge
       confirm_jets_project!
-      require_bundle_gems
+      # require_bundle_gems
       Jets::Dotenv.load!
 
       Jets.application.setup!
