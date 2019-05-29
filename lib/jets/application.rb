@@ -12,7 +12,7 @@ class Jets::Application
 
   def setup!
     load_default_config
-    setup_auto_load_paths
+    setup_auto_load_paths(config.autoload_paths + config.extra_autoload_paths)
   end
 
   def configs!
@@ -188,9 +188,8 @@ class Jets::Application
     end
   end
 
-  def setup_auto_load_paths
+  def setup_auto_load_paths(autoload_paths=default_autoload_paths)
     loader = Jets::Autoloaders.main
-    autoload_paths = config.autoload_paths + config.extra_autoload_paths
     autoload_paths.each do |path|
       next unless File.exist?(path)
       loader.push_dir(path)

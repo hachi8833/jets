@@ -59,9 +59,16 @@ class Jets::Commands::Base < Thor
       # Jets.boot is called.
       # At the same time we cannot call Jets.boot because it assumes that we're within a Jets project. So calling
       # Jets.boot would break commands like jets new.
-      Dir.glob("#{__dir__}/commands/**/*.rb").each do |path|
-        Jets::Autoloaders.once.preload(path)
-      end
+
+      # puts "#{__dir__}/commands/**/*.rb"
+      # Dir.glob("#{__dir__}/**/*.rb").each do |path|
+      #   next if path =~ /import/
+      #   Jets::Autoloaders.once.preload(path)
+      # end
+
+      # Jets::Booter.setup
+      Jets.application.setup_auto_load_paths
+      Jets::Autoloaders.once.eager_load
     end
     memoize :eager_load!
 

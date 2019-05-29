@@ -1,15 +1,18 @@
 class Jets::Booter
   class << self
+    def setup
+      turbo.charge
+      require_bundle_gems
+      Jets::Dotenv.load!
+      Jets.application.setup!
+    end
+
     @booted = false
-    def boot!(options={})
+    def boot!
       return if @booted
 
-      turbo.charge
       confirm_jets_project!
-      # require_bundle_gems
-      Jets::Dotenv.load!
-
-      Jets.application.setup!
+      setup
 
       # Turbines are loaded after setup_auto_load_paths in Jets.application.setup!  Some Turbine options are defined
       # in the project so setup must happen before internal Turbines are loaded.
