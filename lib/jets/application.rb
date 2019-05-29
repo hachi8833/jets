@@ -12,7 +12,8 @@ class Jets::Application
 
   def setup!
     load_default_config
-    setup_auto_load_paths(config.autoload_paths + config.extra_autoload_paths)
+    autoload_paths = config.autoload_paths + config.extra_autoload_paths
+    setup_auto_load_paths(autoload_paths)
   end
 
   def configs!
